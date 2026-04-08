@@ -1,159 +1,143 @@
-var outputLeft = document.getElementById("outputarealeft");
-var outputRight = document.getElementById("outputarearight");
+$(document).ready(function () {
+    const handInputs = ["#hand1", "#hand2", "#hand3", "#hand4", "#hand5"];
+    const infoSpans = ["#hand1-info", "#hand2-info", "#hand3-info", "#hand4-info", "#hand5-info"];
 
-// Initialize Awesomplete
-var _awesompleteOpts = {
-    list: card_db()
-        .get()
-        .map((c) => c.Name), // List is all the cards in the DB
-    autoFirst: true, // The first item in the list is selected
-    filter: Awesomplete.FILTER_STARTSWITH, // Case insensitive from start of word
-};
-var handCompletions = {};
-for (i = 1; i <= 5; i++) {
-    var hand = document.getElementById("hand" + i);
-    handCompletions["hand" + i] = new Awesomplete(hand, _awesompleteOpts);
-}
+    const cardMap = {};
+    for (let card of cards) {
+        cardMap[card.name.toLowerCase()] = card;
+    }
 
-// Creates a div for each fusion
-function fusesToHTML(fuselist) {
-    return fuselist
-        .map(function (fusion) {
-            var res =
-                "<div class='result-div'>Input: " +
-                fusion.card1.Name +
-                "<br>Input: " +
-                fusion.card2.Name;
-            if (fusion.result) {
-                // Equips and Results don't have a result field
-                res += "<br>Result: " + fusion.result.Name;
-                if (isMonster(fusion.result)) {
-                    res += " " + formatStats(fusion.result.Attack, fusion.result.Defense);
-                } else {
-                    res += " [" + cardTypes[fusion.result.Type] + "]";
+    function getCard(name) {
+        return cardMap[name.toLowerCase()] || null;
+    }
+
+    function getStars(card) {
+        if (!card || card.type === "Equip") return "";
+        return `⭐ ${card.star1 || ""} / ${card.star2 || ""}`;
+    }
+
+    function formatCardInfo(card) {
+        if (!card) return `<span class="text-danger">Invalid card</span>`;
+
+        let stars = getStars(card);
+
+        return `
+            <span class="text-dark">
+                ATK: ${card.atk} / DEF: ${card.def} |
+                ${card.type}
+                ${stars ? `<br>${stars}` : ""}
+            </span>
+        `;
+    }
+
+    function getAllCardsFromHand() {
+        let result = [];
+        handInputs.forEach((id) => {
+            let val = $(id).val().trim();
+            if (val) {
+                let card = getCard(val);
+                if (card) result.push(card);
+            }
+        });
+        return result;
+    }
+
+    function findFusions(cardsInHand) {
+        let fusionResults = [];
+        let equipResults = [];
+        let seen = new Set();
+
+        for (let i = 0; i < cardsInHand.length; i++) {
+            for (let j = i + 1; j < cardsInHand.length; j++) {
+                let a = cardsInHand[i];
+                let b = cardsInHand[j];
+
+                let key = `${a.id}-${b.id}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                let result = null;
+
+                // Check fusion both orders
+                result = fusions[a.id]?.[b.id] || fusions[b.id]?.[a.id];
+
+                if (result) {
+                    let resultCard = cards[result];
+                    fusionResults.push({
+                        result: resultCard,
+                        recipe: `${a.name} + ${b.name}`
+                    });
+                    continue;
+                }
+
+                // Check equips
+                if (equips[a.id]?.includes(b.id)) {
+                    equipResults.push(`${b.name} equips to ${a.name}`);
+                }
+                if (equips[b.id]?.includes(a.id)) {
+                    equipResults.push(`${a.name} equips to ${b.name}`);
                 }
             }
-            return res + "<br><br></div>";
-        })
-        .join("\n");
-}
+        }
 
-function getCardByName(cardname) {
-    return card_db({ Name: { isnocase: cardname } }).first();
-}
-
-// Returns the card with a given ID
-function getCardById(id) {
-    var card = card_db({ Id: id }).first();
-    if (!card) {
-        return null;
+        return { fusionResults, equipResults };
     }
-    return card;
-}
 
-function formatStats(attack, defense) {
-    return "(" + attack + "/" + defense + ")";
-}
+    function renderResults(fusionsList, equipsList) {
+        let left = $("#outputarealeft");
+        let right = $("#outputarearight");
 
-// Returns true if the given card is a monster, false if it is magic, ritual,
-// trap or equip
-function isMonster(card) {
-    return card.Type < 20;
-}
+        left.empty();
+        right.empty();
 
-function checkCard(cardname, infoname) {
-    var info = $("#" + infoname);
-    var card = getCardByName(cardname);
-    if (!card) {
-        info.html("Invalid card name");
-    } else if (isMonster(card)) {
-        info.html(formatStats(card.Attack, card.Defense) + " [" + cardTypes[card.Type] + "]");
-    } else {
-        info.html("[" + cardTypes[card.Type] + "]");
-    }
-}
+        if (fusionsList.length === 0 && equipsList.length === 0) {
+            left.html(`<p class="text-danger">No results found.</p>`);
+            return;
+        }
 
-// Checks if the given card is in the list of fusions
-// Assumes the given card is an Object with an "Id" field
-// TODO: Generalize to take Object, Name (string) or Id (int)
-function hasFusion(fusionList, card) {
-    return fusionList.some((c) => c.Id === card.Id);
-}
+        fusionsList.sort((a, b) => b.result.atk - a.result.atk);
 
-function findFusions() {
-    var cards = [];
-    var monsters = [];
-    var others = [];
+        for (let f of fusionsList) {
+            left.append(`
+                <div class="mb-2 p-2 border rounded bg-white">
+                    <strong>${f.result.name}</strong><br>
+                    ATK ${f.result.atk} / DEF ${f.result.def}<br>
+                    ${f.result.type}<br>
+                    <small>${f.recipe}</small>
+                </div>
+            `);
+        }
 
-    for (i = 1; i <= 5; i++) {
-        var name = $("#hand" + i).val();
-        var card = getCardByName(name);
-        if (card) {
-            cards.push(card);
+        for (let e of equipsList) {
+            right.append(`
+                <div class="mb-2 p-2 border rounded bg-white">
+                    ${e}
+                </div>
+            `);
         }
     }
 
-    var fuses = [];
-    var equips = [];
+    function updateAll() {
+        let cardsInHand = getAllCardsFromHand();
 
-    for (i = 0; i < cards.length - 1; i++) {
-        var card1 = cards[i];
-        var card1Fuses = fusionsList[card1.Id];
-        var card1Equips = equipsList[card1.Id];
-        for (j = i + 1; j < cards.length; j++) {
-            var card2 = cards[j];
-            var fusion = card1Fuses.find((f) => f.card === card2.Id);
-            if (fusion) {
-                fuses.push({ card1: card1, card2: card2, result: getCardById(fusion.result) });
-            }
-            var equip = card1Equips.find((e) => e === card2.Id);
-            if (equip) {
-                equips.push({ card1: card1, card2: card2 });
-            }
-        }
+        handInputs.forEach((id, index) => {
+            let val = $(id).val().trim();
+            let card = getCard(val);
+            $(infoSpans[index]).html(formatCardInfo(card));
+        });
+
+        let { fusionResults, equipResults } = findFusions(cardsInHand);
+        renderResults(fusionResults, equipResults);
     }
 
-    outputLeft.innerHTML = "<h2 class='center'>Fusions:</h2>";
-    outputLeft.innerHTML += fusesToHTML(fuses.sort((a, b) => b.result.Attack - a.result.Attack));
-
-    outputRight.innerHTML = "<h2 class='center'>Equips:</h2>";
-    outputRight.innerHTML += fusesToHTML(equips);
-}
-
-function resultsClear() {
-    outputLeft.innerHTML = "";
-    outputRight.innerHTML = "";
-}
-
-function inputsClear() {
-    for (i = 1; i <= 5; i++) {
-        $("#hand" + i).val("");
-        $("#hand" + i + "-info").html("");
-    }
-}
-
-// Set up event listeners for each card input
-for (i = 1; i <= 5; i++) {
-    $("#hand" + i).on("change", function () {
-        handCompletions[this.id].select(); // select the currently highlighted element
-        if (this.value === "") {
-            // If the box is cleared, remove the card info
-            $("#" + this.id + "-info").html("");
-        } else {
-            checkCard(this.value, this.id + "-info");
-        }
-        resultsClear();
-        findFusions();
+    handInputs.forEach((id) => {
+        $(id).on("input", updateAll);
     });
 
-    $("#hand" + i).on("awesomplete-selectcomplete", function () {
-        checkCard(this.value, this.id + "-info");
-        resultsClear();
-        findFusions();
+    $("#resetBtn").click(function () {
+        handInputs.forEach((id) => $(id).val(""));
+        infoSpans.forEach((id) => $(id).html(""));
+        $("#outputarealeft").empty();
+        $("#outputarearight").empty();
     });
-}
-
-$("#resetBtn").on("click", function () {
-    resultsClear();
-    inputsClear();
 });
