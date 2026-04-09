@@ -32,9 +32,11 @@
 
 .guardian-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
     border-bottom: 1px solid #343b44;
-    padding: 5px 0;
+    padding: 4px 0;
+    gap: 6px;
 }
 
 .guardian-row:last-child {
@@ -42,9 +44,8 @@
 }
 
 .guardian-symbol {
-    font-weight: bold;
-    width: 24px;
-    color: #9ab7ff;
+    width: 18px; 
+    text-align: center;
 }
 
 .guardian-text {
