@@ -41,8 +41,8 @@ function getGuardianStars(card) {
         return "";
     }
 
-    var starA = starNames[card.GuardianStarA] || "?";
-    var starB = starNames[card.GuardianStarB] || "?";
+    var starA = starNames[(card.GuardianStarA || 0) - 1] || "?";
+    var starB = starNames[(card.GuardianStarB || 0) - 1] || "?";
     return starA + " / " + starB;
 }
 
