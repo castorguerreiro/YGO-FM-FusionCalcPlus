@@ -104,3 +104,26 @@
     color: #a855f7 !important;
     font-weight: bold;
 }
+@media (max-width: 767.98px) {
+    .hand-column {
+        align-items: center;
+    }
+
+    .hand-column .hand-input-group {
+        width: 100%;
+        max-width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hand-column .hand-input-group input {
+        width: 100%;
+    }
+
+    .hand-column .hand-input-group span {
+        display: block;
+        margin-left: 0 !important;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
