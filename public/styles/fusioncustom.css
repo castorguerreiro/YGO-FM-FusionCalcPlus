@@ -124,18 +124,33 @@
         max-width: 220px;
         margin-left: auto;
         margin-right: auto;
+        text-align: center;
     }
 
+    /* IMPORTANT: Awesomplete wraps the input after page load */
+    .hand-column .hand-input-group .awesomplete {
+        display: block !important;
+        width: 220px !important;
+        max-width: 220px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: left;
+    }
+
+    .hand-column .hand-input-group .awesomplete > input,
     .hand-column .hand-input-group input {
-        width: 100%;
+        width: 100% !important;
         display: block;
         margin-left: auto;
         margin-right: auto;
+        box-sizing: border-box;
     }
 
-    .hand-column .hand-input-group span {
+    .hand-column .hand-input-group span[id$="-info"] {
         display: block;
-        margin-left: 0 !important;
+        width: 220px;
+        margin-left: auto !important;
+        margin-right: auto !important;
         text-align: center;
         margin-bottom: 10px;
     }
