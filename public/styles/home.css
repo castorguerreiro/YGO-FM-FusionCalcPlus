@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "MatrixSmallCaps";
+    src: url("../fonts/matrix-small-caps.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --varela: "Varela Round", sans-serif;
     --jetbrains: "JetBrains Mono", monospace;
@@ -19,11 +27,13 @@
 }
 
 body {
-    font-family: var(--varela), "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "MatrixSmallCaps", var(--varela), sans-serif;
     color: var(--text-main);
     background: var(--bg-main);
+    letter-spacing: 0.5px; /* helps readability */
 }
 
+/* Header */
 #logo {
     height: 2em;
 }
@@ -43,11 +53,11 @@ body {
     color: var(--accent) !important;
 }
 
+/* Buttons */
 .btn-thread {
     color: var(--text-main);
     background-color: transparent;
     border: 1px solid var(--border-color);
-    font-family: var(--varela);
 }
 
 .btn-thread:hover {
@@ -56,11 +66,15 @@ body {
     border-color: var(--text-main);
 }
 
+/* Titles (stronger Matrix look) */
 .text-main {
-    font-family: var(--jetbrains);
+    font-family: "MatrixSmallCaps", var(--jetbrains);
+    letter-spacing: 1px;
+    text-transform: uppercase;
     color: var(--text-main) !important;
 }
 
+/* Text */
 .text-subtext,
 p,
 span,
@@ -74,6 +88,7 @@ h5 {
     color: var(--text-soft);
 }
 
+/* Layout */
 main.container,
 main.container-fluid {
     padding-top: 1rem;
@@ -89,9 +104,9 @@ section.bg-light,
     border: 1px solid var(--border-color);
     border-radius: 12px;
     margin-bottom: 1.5rem;
-    color: var(--text-main) !important;
 }
 
+/* Inputs */
 input,
 textarea,
 select {
@@ -100,6 +115,7 @@ select {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 0.35rem 0.55rem;
+    letter-spacing: 0.5px;
 }
 
 input:focus,
@@ -114,11 +130,11 @@ select:focus {
     color: var(--text-muted);
 }
 
+/* Buttons */
 .btn-outline-dark,
 .btn-outline-success {
     color: var(--text-main);
     border-color: var(--border-color);
-    background: transparent;
 }
 
 .btn-outline-dark:hover,
@@ -137,6 +153,7 @@ select:focus {
     filter: brightness(1.08);
 }
 
+/* Footer */
 .footer-bottom {
     background-color: var(--bg-footer);
 }
@@ -154,6 +171,7 @@ select:focus {
     margin-left: 10px;
 }
 
+/* Links */
 a {
     color: var(--accent);
 }
@@ -162,10 +180,12 @@ a:hover {
     color: var(--accent-hover);
 }
 
+/* Results */
 .result-div {
     color: var(--text-soft);
 }
 
+/* Remove old theme backgrounds */
 .polymerization,
 .background-vrains,
 #container-space {
@@ -176,14 +196,15 @@ a:hover {
 .fusion-search,
 .fusion-calculator {
     background: transparent !important;
-    color: inherit !important;
     padding: 0 !important;
 }
 
+/* Disable animations */
 .hero-title {
     animation: none;
 }
 
+/* Mobile tweaks */
 @media (max-width: 576px) {
     .hero-title {
         font-size: 1.6rem;
