@@ -52,3 +52,22 @@
     margin-left: 8px;
     color: #c9d1d9;
 }
+.hand-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hand-column .column-title {
+    width: 220px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.hand-column .hand-input-group {
+    width: 220px;
+}
+
+.hand-column .hand-input-group input {
+    width: 100%;
+}
