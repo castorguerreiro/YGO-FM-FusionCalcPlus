@@ -72,33 +72,35 @@
     width: 100%;
 }
 
+/* ===== Awesomplete Dark Theme Patch ===== */
+
 .awesomplete > ul {
-    background: #1b1f24 !important; /* match panel background */
+    background: #1b1f24 !important;
     border: 1px solid #343b44;
     border-radius: 8px;
     color: #d6dde5;
 }
 
-/* Hover (mouse selection) → PURPLE */
-.awesomplete > ul > li:hover {
-    background: #7c3aed !important;
-    color: #ffffff;
-}
-
-/* Keyboard selection (Enter / arrows) → keep BLUE */
-.awesomplete > ul > li[aria-selected="true"] {
-    background: #2563eb !important;
-    color: #ffffff;
-}
-
-/* Default items */
 .awesomplete > ul > li {
     padding: 6px 10px;
     cursor: pointer;
 }
 
-/* Highlighted matching text */
+/* Hover row */
+.awesomplete > ul > li:hover {
+    background: #2a2f38 !important;
+    color: #ffffff;
+}
+
+/* Keyboard-selected row stays blue */
+.awesomplete > ul > li[aria-selected="true"] {
+    background: #2563eb !important;
+    color: #ffffff;
+}
+
+/* Matched letters inside suggestions */
 .awesomplete mark {
-    background: transparent;
-    color: #9ab7ff;
+    background: transparent !important;
+    color: #a855f7 !important;
+    font-weight: bold;
 }
