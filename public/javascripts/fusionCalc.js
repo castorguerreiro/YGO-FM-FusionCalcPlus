@@ -77,13 +77,13 @@ function checkCard(cardname, infoname) {
     }
 }
 
+// Creates a div for each fusion/equip
 function fusesToHTML(fuselist, mode) {
     return fuselist
         .map(function (fusion) {
             if (mode === "fusion") {
                 var res =
-                    "<div class='result-div'>" +
-                    "Input: " +
+                    "<div class='result-div'>Input: " +
                     fusion.card1.Name +
                     "<br>Input: " +
                     fusion.card2.Name +
@@ -105,10 +105,9 @@ function fusesToHTML(fuselist, mode) {
             }
 
             return (
-                "<div class='result-div'>" +
-                "Monster: " +
+                "<div class='result-div'>Input: " +
                 fusion.card1.Name +
-                "<br>Equip: " +
+                "<br>Input: " +
                 fusion.card2.Name +
                 "<br><br></div>"
             );
