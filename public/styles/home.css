@@ -144,12 +144,14 @@ select:focus {
 }
 
 .btn-danger {
-    background-color: var(--danger);
-    border-color: var(--danger);
+    background-color: #7c3aed;
+    border-color: #7c3aed;
+    color: #fff;
 }
 
 .btn-danger:hover {
-    filter: brightness(1.08);
+    background-color: #6d28d9;
+    border-color: #6d28d9;
 }
 
 /* Footer */
