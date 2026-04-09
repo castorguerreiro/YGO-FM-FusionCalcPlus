@@ -30,7 +30,8 @@ body {
     font-family: "MatrixSmallCaps", var(--varela), sans-serif;
     color: var(--text-main);
     background: var(--bg-main);
-    letter-spacing: 0.5px; /* helps readability */
+    letter-spacing: 0.5px;
+    font-size: 17px; 
 }
 
 /* Header */
@@ -66,15 +67,14 @@ body {
     border-color: var(--text-main);
 }
 
-/* Titles (stronger Matrix look) */
 .text-main {
     font-family: "MatrixSmallCaps", var(--jetbrains);
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     color: var(--text-main) !important;
+    font-size: 1.2em; 
 }
 
-/* Text */
 .text-subtext,
 p,
 span,
@@ -88,7 +88,6 @@ h5 {
     color: var(--text-soft);
 }
 
-/* Layout */
 main.container,
 main.container-fluid {
     padding-top: 1rem;
