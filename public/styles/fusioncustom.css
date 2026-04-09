@@ -1,10 +1,52 @@
 .result-div {
-  padding: 6px;
-  margin: 20px;
-  border: 1px dotted #337ab7;
-  border-radius: 10px;
+    padding: 10px 12px;
+    margin: 14px 10px;
+    border: 1px solid #343b44;
+    border-radius: 10px;
+    background: #222831;
+    color: #d8dee9;
 }
 
 .hand-input-group input {
     margin: 2px;
+}
+
+.guardian-box {
+    background: #222831;
+    border: 1px solid #343b44;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #d8dee9;
+}
+
+.guardian-box h5 {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #f1f3f5;
+}
+
+.guardian-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #343b44;
+    padding: 4px 0;
+}
+
+.guardian-row:last-child {
+    border-bottom: none;
+}
+
+.guardian-symbol {
+    font-weight: bold;
+    width: 20px;
+    color: #9ab7ff;
+}
+
+.guardian-text {
+    flex: 1;
+    margin-left: 6px;
+    color: #c9d1d9;
 }
