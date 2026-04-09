@@ -6,9 +6,9 @@ var HAND_SLOTS = 10;
 var _awesompleteOpts = {
     list: card_db()
         .get()
-        .map((c) => c.Name), // List is all the cards in the DB
-    autoFirst: true, // The first item in the list is selected
-    filter: Awesomplete.FILTER_STARTSWITH, // Case insensitive from start of word
+        .map((c) => c.Name),
+    autoFirst: true,
+    filter: Awesomplete.FILTER_STARTSWITH,
 };
 
 var handCompletions = {};
@@ -19,53 +19,21 @@ for (var i = 1; i <= HAND_SLOTS; i++) {
     }
 }
 
-// Creates a div for each fusion
-function fusesToHTML(fuselist) {
-    return fuselist
-        .map(function (fusion) {
-            var res =
-                "<div class='result-div'>Input: " +
-                fusion.card1.Name +
-                "<br>Input: " +
-                fusion.card2.Name;
-
-            if (fusion.result) {
-                // Equips don't have a result field
-                res += "<br>Result: " + fusion.result.Name;
-
-                if (isMonster(fusion.result)) {
-                    res += " " + formatStats(fusion.result.Attack, fusion.result.Defense);
-                } else {
-                    res += " [" + cardTypes[fusion.result.Type] + "]";
-                }
-            }
-
-            return res + "<br><br></div>";
-        })
-        .join("\n");
-}
-
 function getCardByName(cardname) {
     return card_db({ Name: { isnocase: cardname } }).first();
 }
 
-// Returns the card with a given ID
 function getCardById(id) {
     var card = card_db({ Id: id }).first();
-    if (!card) {
-        return null;
-    }
-    return card;
+    return card || null;
 }
 
 function formatStats(attack, defense) {
     return "(" + attack + "/" + defense + ")";
 }
 
-// Returns true if the given card is a monster, false if it is magic, ritual,
-// trap or equip
 function isMonster(card) {
-    return card.Type < 20;
+    return card && card.Type < 20;
 }
 
 function getGuardianStars(card) {
@@ -91,7 +59,10 @@ function checkCard(cardname, infoname) {
 
     if (!card) {
         info.html("Invalid card name");
-    } else if (isMonster(card)) {
+        return;
+    }
+
+    if (isMonster(card)) {
         info.html(
             formatStats(card.Attack, card.Defense) +
                 " [" +
@@ -106,10 +77,43 @@ function checkCard(cardname, infoname) {
     }
 }
 
-// Checks if the given card is in the list of fusions
-// Assumes the given card is an Object with an "Id" field
-function hasFusion(fusionList, card) {
-    return fusionList.some((c) => c.Id === card.Id);
+function fusesToHTML(fuselist, mode) {
+    return fuselist
+        .map(function (fusion) {
+            if (mode === "fusion") {
+                var res =
+                    "<div class='result-div'>" +
+                    "Input: " +
+                    fusion.card1.Name +
+                    "<br>Input: " +
+                    fusion.card2.Name +
+                    "<br>Result: " +
+                    fusion.result.Name;
+
+                if (isMonster(fusion.result)) {
+                    res +=
+                        " " +
+                        formatStats(fusion.result.Attack, fusion.result.Defense) +
+                        "<br><small>Stars: " +
+                        getGuardianStars(fusion.result) +
+                        "</small>";
+                } else {
+                    res += " [" + cardTypes[fusion.result.Type] + "]";
+                }
+
+                return res + "<br><br></div>";
+            }
+
+            return (
+                "<div class='result-div'>" +
+                "Monster: " +
+                fusion.card1.Name +
+                "<br>Equip: " +
+                fusion.card2.Name +
+                "<br><br></div>"
+            );
+        })
+        .join("\n");
 }
 
 function findFusions() {
@@ -119,9 +123,10 @@ function findFusions() {
         var handInput = $("#hand" + i);
         if (!handInput.length) continue;
 
-        var name = handInput.val();
-        var card = getCardByName(name);
+        var name = handInput.val().trim();
+        if (!name) continue;
 
+        var card = getCardByName(name);
         if (card) {
             cards.push(card);
         }
@@ -138,16 +143,25 @@ function findFusions() {
         for (var j = i + 1; j < cards.length; j++) {
             var card2 = cards[j];
 
-            var fusion = card1Fuses.find((f) => f.card === card2.Id);
+            var fusion = card1Fuses.find(function (f) {
+                return f.card === card2.Id;
+            });
+
             if (fusion) {
-                fuses.push({
-                    card1: card1,
-                    card2: card2,
-                    result: getCardById(fusion.result),
-                });
+                var resultCard = getCardById(fusion.result);
+                if (resultCard) {
+                    fuses.push({
+                        card1: card1,
+                        card2: card2,
+                        result: resultCard,
+                    });
+                }
             }
 
-            var equip = card1Equips.find((e) => e === card2.Id);
+            var equip = card1Equips.find(function (e) {
+                return e === card2.Id;
+            });
+
             if (equip) {
                 equips.push({
                     card1: card1,
@@ -158,12 +172,17 @@ function findFusions() {
     }
 
     outputLeft.innerHTML = "<h2 class='center'>Fusions:</h2>";
-    outputLeft.innerHTML += fusesToHTML(
-        fuses.sort((a, b) => b.result.Attack - a.result.Attack)
-    );
+    if (fuses.length > 0) {
+        fuses.sort(function (a, b) {
+            return b.result.Attack - a.result.Attack;
+        });
+        outputLeft.innerHTML += fusesToHTML(fuses, "fusion");
+    }
 
     outputRight.innerHTML = "<h2 class='center'>Equips:</h2>";
-    outputRight.innerHTML += fusesToHTML(equips);
+    if (equips.length > 0) {
+        outputRight.innerHTML += fusesToHTML(equips, "equip");
+    }
 }
 
 function resultsClear() {
@@ -178,17 +197,15 @@ function inputsClear() {
     }
 }
 
-// Set up event listeners for each card input
 for (var i = 1; i <= HAND_SLOTS; i++) {
     if (!$("#hand" + i).length) continue;
 
     $("#hand" + i).on("change", function () {
         if (handCompletions[this.id]) {
-            handCompletions[this.id].select(); // select the currently highlighted element
+            handCompletions[this.id].select();
         }
 
         if (this.value === "") {
-            // If the box is cleared, remove the card info
             $("#" + this.id + "-info").html("");
         } else {
             checkCard(this.value, this.id + "-info");
@@ -202,6 +219,14 @@ for (var i = 1; i <= HAND_SLOTS; i++) {
         checkCard(this.value, this.id + "-info");
         resultsClear();
         findFusions();
+    });
+
+    $("#hand" + i).on("input", function () {
+        if (this.value.trim() === "") {
+            $("#" + this.id + "-info").html("");
+            resultsClear();
+            findFusions();
+        }
     });
 }
 
