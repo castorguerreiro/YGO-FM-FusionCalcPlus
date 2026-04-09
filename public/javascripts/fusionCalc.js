@@ -68,7 +68,7 @@ function checkCard(cardname, infoname) {
                 " [" +
                 cardTypes[card.Type] +
                 "]" +
-                "<br><small>Stars: " +
+                "<br><small>" +
                 getGuardianStars(card) +
                 "</small>"
         );
@@ -94,7 +94,7 @@ function fusesToHTML(fuselist, mode) {
                     res +=
                         " " +
                         formatStats(fusion.result.Attack, fusion.result.Defense) +
-                        "<br><small>Stars: " +
+                        "<br><small>" +
                         getGuardianStars(fusion.result) +
                         "</small>";
                 } else {
