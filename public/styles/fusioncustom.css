@@ -71,3 +71,34 @@
 .hand-column .hand-input-group input {
     width: 100%;
 }
+
+.awesomplete > ul {
+    background: #1b1f24 !important; /* match panel background */
+    border: 1px solid #343b44;
+    border-radius: 8px;
+    color: #d6dde5;
+}
+
+/* Hover (mouse selection) → PURPLE */
+.awesomplete > ul > li:hover {
+    background: #7c3aed !important;
+    color: #ffffff;
+}
+
+/* Keyboard selection (Enter / arrows) → keep BLUE */
+.awesomplete > ul > li[aria-selected="true"] {
+    background: #2563eb !important;
+    color: #ffffff;
+}
+
+/* Default items */
+.awesomplete > ul > li {
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+/* Highlighted matching text */
+.awesomplete mark {
+    background: transparent;
+    color: #9ab7ff;
+}
