@@ -106,18 +106,31 @@
 }
 @media (max-width: 767.98px) {
     .hand-column {
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        width: 100%;
+    }
+
+    .hand-column .column-title {
+        width: 220px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hand-column .hand-input-group {
-        width: 100%;
-        max-width: 260px;
+        width: 220px;
+        max-width: 220px;
         margin-left: auto;
         margin-right: auto;
     }
 
     .hand-column .hand-input-group input {
         width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hand-column .hand-input-group span {
