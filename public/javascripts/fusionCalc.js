@@ -101,7 +101,7 @@ function fusesToHTML(fuselist, mode) {
                     res += " [" + cardTypes[fusion.result.Type] + "]";
                 }
 
-                return res + "<br><br></div>";
+                return res + "</div>";
             }
 
             return (
