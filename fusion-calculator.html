@@ -12,98 +12,88 @@
     <link rel="stylesheet" href="public/styles/fusioncustom.css" />
     <link rel="stylesheet" href="public/styles/awesomplete.css" />
 </head>
-
 <body class="d-flex flex-column min-vh-100">
+    <main class="container py-4">
+        <section class="row mt-3">
+            <div class="col">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="hand-column">
+                            <h3 class="text-main column-title">Hand</h3>
 
-<main class="container py-4">
+                            <div class="hand-input-group">
+                                <input type="text" id="hand1" /><span id="hand1-info"></span><br />
+                                <input type="text" id="hand2" /><span id="hand2-info"></span><br />
+                                <input type="text" id="hand3" /><span id="hand3-info"></span><br />
+                                <input type="text" id="hand4" /><span id="hand4-info"></span><br />
+                                <input type="text" id="hand5" /><span id="hand5-info"></span><br />
+                            </div>
+                        </div>
+                    </div>
 
-    <section class="row mt-3">
-        <div class="col">
-            <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="hand-column">
+                            <h3 class="text-main column-title">Table</h3>
 
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="hand-column">
-                        <h3 class="text-main column-title">Hand</h3>
+                            <div class="hand-input-group">
+                                <input type="text" id="hand6" /><span id="hand6-info"></span><br />
+                                <input type="text" id="hand7" /><span id="hand7-info"></span><br />
+                                <input type="text" id="hand8" /><span id="hand8-info"></span><br />
+                                <input type="text" id="hand9" /><span id="hand9-info"></span><br />
+                                <input type="text" id="hand10" /><span id="hand10-info"></span><br />
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="hand-input-group">
-                            <input type="text" id="hand1" /><span id="hand1-info"></span><br />
-                            <input type="text" id="hand2" /><span id="hand2-info"></span><br />
-                            <input type="text" id="hand3" /><span id="hand3-info"></span><br />
-                            <input type="text" id="hand4" /><span id="hand4-info"></span><br />
-                            <input type="text" id="hand5" /><span id="hand5-info"></span><br />
+                    <div class="col-lg-4 col-md-12 mb-4">
+                        <div class="guardian-box">
+                            <h5 class="text-main">Guardian Stars</h5>
+
+                            <div class="guardian-row"><span class="guardian-symbol">☉</span><span class="guardian-text">Sun → beats Moon / loses to Mercury</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">☿</span><span class="guardian-text">Mercury → beats Sun / loses to Venus</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♀</span><span class="guardian-text">Venus → beats Mercury / loses to Moon</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">☾</span><span class="guardian-text">Moon → beats Venus / loses to Sun</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♂</span><span class="guardian-text">Mars → beats Jupiter / loses to Neptune</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♃</span><span class="guardian-text">Jupiter → beats Saturn / loses to Mars</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♄</span><span class="guardian-text">Saturn → beats Uranus / loses to Jupiter</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">⛢</span><span class="guardian-text">Uranus → beats Pluto / loses to Saturn</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♆</span><span class="guardian-text">Neptune → beats Mars / loses to Pluto</span></div>
+                            <div class="guardian-row"><span class="guardian-symbol">♇</span><span class="guardian-text">Pluto → beats Neptune / loses to Uranus</span></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="hand-column">
-                        <h3 class="text-main column-title">Table</h3>
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-danger" id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </section>
 
-                        <div class="hand-input-group">
-                            <input type="text" id="hand6" /><span id="hand6-info"></span><br />
-                            <input type="text" id="hand7" /><span id="hand7-info"></span><br />
-                            <input type="text" id="hand8" /><span id="hand8-info"></span><br />
-                            <input type="text" id="hand9" /><span id="hand9-info"></span><br />
-                            <input type="text" id="hand10" /><span id="hand10-info"></span><br />
-                        </div>
+        <section class="row mt-4">
+            <div class="col">
+                <h4 class="text-center text-main mb-4">Results</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="outputarealeft"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div id="outputarearight"></div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-12 mb-4">
-                    <div class="guardian-box">
-                        <h5 class="text-main">Guardian Stars</h5>
-
-                        <div class="guardian-row"><span class="guardian-symbol">☉</span><span class="guardian-text">Sun → beats Moon / loses to Mercury</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">☿</span><span class="guardian-text">Mercury → beats Sun / loses to Venus</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♀</span><span class="guardian-text">Venus → beats Mercury / loses to Moon</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">☾</span><span class="guardian-text">Moon → beats Venus / loses to Sun</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♂</span><span class="guardian-text">Mars → beats Jupiter / loses to Neptune</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♃</span><span class="guardian-text">Jupiter → beats Saturn / loses to Mars</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♄</span><span class="guardian-text">Saturn → beats Uranus / loses to Jupiter</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">⛢</span><span class="guardian-text">Uranus → beats Pluto / loses to Saturn</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♆</span><span class="guardian-text">Neptune → beats Mars / loses to Pluto</span></div>
-                        <div class="guardian-row"><span class="guardian-symbol">♇</span><span class="guardian-text">Pluto → beats Neptune / loses to Uranus</span></div>
-                    </div>
-                </div>
-
             </div>
+        </section>
+    </main>
 
-            <div class="text-center mt-3">
-                <button type="button" class="btn btn-danger" id="resetBtn">
-                    Reset
-                </button>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="row mt-4">
-        <div class="col">
-            <h4 class="text-center text-main mb-4">Results</h4>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div id="outputarealeft"></div>
-                </div>
-
-                <div class="col-md-6">
-                    <div id="outputarearight"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<script src="public/javascripts/awesomplete.min.js"></script>
-<script src="public/javascripts/jquery-3.5.1.min.js"></script>
-<script src="public/javascripts/bootstrap.bundle.min.js"></script>
-<script src="public/javascripts/taffy.js"></script>
-<script src="data/cards.js"></script>
-<script src="data/fusions.js"></script>
-<script src="data/equips.js"></script>
-<script src="data/types_and_stars.js"></script>
-<script src="public/javascripts/fusionCalc.js"></script>
-
+    <script src="public/javascripts/awesomplete.min.js"></script>
+    <script src="public/javascripts/jquery-3.5.1.min.js"></script>
+    <script src="public/javascripts/bootstrap.bundle.min.js"></script>
+    <script src="public/javascripts/taffy.js"></script>
+    <script src="data/cards.js"></script>
+    <script src="data/fusions.js"></script>
+    <script src="data/equips.js"></script>
+    <script src="data/types_and_stars.js"></script>
+    <script src="public/javascripts/fusionCalc.js"></script>
 </body>
 </html>
