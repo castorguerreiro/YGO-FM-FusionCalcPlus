@@ -13,17 +13,12 @@
     --bg-main: #121417;
     --bg-panel: #1b1f24;
     --bg-panel-2: #222831;
-    --bg-header: #1a1d21;
-    --bg-footer: #0d0f12;
-
     --text-main: #f1f3f5;
     --text-soft: #d6dde5;
     --text-muted: #9aa4ad;
-
     --border-color: #343b44;
     --accent: #7aa2ff;
     --accent-hover: #9ab7ff;
-    --danger: #d9534f;
 }
 
 body {
@@ -32,39 +27,6 @@ body {
     background: var(--bg-main);
     letter-spacing: 0.6px;
     font-size: 20px;
-}
-
-#logo {
-    height: 2em;
-}
-
-.navbar,
-.bg-light {
-    background-color: var(--bg-header) !important;
-}
-
-.nav-link,
-.navbar-brand,
-.text-dark {
-    color: var(--text-main) !important;
-}
-
-.nav-link:hover {
-    color: var(--accent) !important;
-}
-
-.btn-thread {
-    color: var(--text-main);
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    font-family: "MatrixSmallCaps", var(--varela), sans-serif;
-    font-size: 1em;
-}
-
-.btn-thread:hover {
-    color: var(--bg-main);
-    background-color: var(--text-main);
-    border-color: var(--text-main);
 }
 
 .text-main {
@@ -132,21 +94,6 @@ select:focus {
     color: var(--text-muted);
 }
 
-.btn-outline-dark,
-.btn-outline-success {
-    color: var(--text-main);
-    border-color: var(--border-color);
-    background: transparent;
-    font-size: 1em;
-}
-
-.btn-outline-dark:hover,
-.btn-outline-success:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #0b0d10;
-}
-
 .btn-danger {
     background-color: #7c3aed;
     border-color: #7c3aed;
@@ -159,23 +106,6 @@ select:focus {
     border-color: #6d28d9;
 }
 
-.footer-bottom {
-    background-color: var(--bg-footer);
-}
-
-.millennium-pendant {
-    height: 1rem;
-    width: 1rem;
-    margin-left: 10px;
-}
-
-.gh-logo {
-    height: 1rem;
-    width: 1rem;
-    background-color: white;
-    margin-left: 10px;
-}
-
 a {
     color: var(--accent);
 }
@@ -184,43 +114,8 @@ a:hover {
     color: var(--accent-hover);
 }
 
-.result-div {
-    color: var(--text-soft);
-}
-
-.polymerization,
-.background-vrains,
-#container-space {
-    background: transparent !important;
-}
-
-.about-title,
-.fusion-search,
-.fusion-calculator {
-    background: transparent !important;
-    color: inherit !important;
-    padding: 0 !important;
-}
-
-.hero-title {
-    animation: none;
-}
-
 @media (max-width: 576px) {
     body {
         font-size: 18px;
-    }
-
-    .hero-title {
-        font-size: 1.6rem;
-        text-align: center;
-    }
-
-    .text-subtext {
-        font-size: 1em;
-    }
-
-    .footer-bottom {
-        font-size: 12px;
     }
 }
