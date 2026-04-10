@@ -109,7 +109,7 @@ function fusesToHTML(fuselist, mode) {
                 fusion.card1.Name +
                 "<br>Input: " +
                 fusion.card2.Name +
-                "<br><br></div>"
+                "</div>"
             );
         })
         .join("\n");
