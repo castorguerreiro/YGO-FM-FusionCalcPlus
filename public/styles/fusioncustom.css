@@ -27,7 +27,8 @@
 
 .hand-column .hand-input-group input {
     width: 100%;
-    margin: 4px;
+    margin: 4px 0;
+    box-sizing: border-box;
 }
 
 .guardian-box {
